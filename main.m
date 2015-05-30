@@ -6,7 +6,6 @@ rawdatadir = fullfile(pardir,'std_CFE');
 datadir = fullfile(studydir,'data');
 cd(codedir);
 
-
 global STUDY;
 
 condname = {'alignsame','aligndiff','misalignsame','misaligndiff'};
@@ -28,7 +27,7 @@ outfile = fullfile(studydir,'data','std_CFE');
 
 % load the data of interest of subjects 
 % based on the idfile
-rawmat = loaddata([outfile,'.mat'],idfile);
+rawmat = loadData([outfile,'.mat'],idfile);
 
 Nsubj = length(rawmat);
 
@@ -63,9 +62,9 @@ newacc = estimateAccuracy();
 
 %%  reliability 
 repetition = 10;
-[first_half,second_half] = split_half_trial(repetition);
-[mean_corr,std_corr] = split_half_reliability('Pearson');
+[first_half,second_half] = splitHalfTrial(repetition);
+[mean_corr,std_corr] = splitHalfReliability('Pearson');
 
-[mean_corr,std_corr] = split_half_reliability('Pearson',[1 0 -1 0]);
+[mean_corr,std_corr] = splitHalfReliability('Pearson',[1 0 -1 0]);
 
 

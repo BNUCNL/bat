@@ -1,4 +1,4 @@
-function [R_diff R_residual] = split_half_diff(repetitionN,interested_varialbe, controlled_variable,type)
+function [R_diff R_residual] = splitHalfDiff(repetitionN,interested_varialbe, controlled_variable,type)
 % function [corrected_split_half_reliablity] = split_half_02(repetitionN,interested_varialbe, controlled_variable,type)
 % An general split-half reliability analysis procedure
 % repetitionN: Numbers of repetition; 

@@ -1,5 +1,5 @@
-function reliablity = split_half_reliablity(type)
-% reliablity =  split_half_reliablity(firsthalf,secondhalf, type)
+function reliablity = splitCorr(type)
+% reliablity =  splitCorr(firsthalf,secondhalf, type)
 % firsthalf:  all condtions data from the first  half trials
 % secondhalf: all condtions data from the second half trials
 % type: Spearman or Pearson

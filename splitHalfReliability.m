@@ -1,4 +1,4 @@
-function [mean_corr,std_corr] = split_half_reliablity(type,contrast)
+function [mean_corr,std_corr] = splitHalfReliability(type,contrast)
 % reliablity =  split_half_reliablity(firsthalf,secondhalf, type)
 % firsthalf:  all condtions data from the first  half trials
 % secondhalf: all condtions data from the second half trials

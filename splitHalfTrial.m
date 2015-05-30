@@ -1,4 +1,4 @@
-function [first_half,second_half] = split_half_trial(repetition)
+function [first_half,second_half] = splitHalfTrial(repetition)
 % [first_half,second_half] = split_half_trial(repetition)
 % repetition: times of permutation
 

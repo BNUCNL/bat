@@ -1,11 +1,11 @@
-% [effectsize mean1 mean2 std1 std2] = cohen_d(X,Y,type)
+% [effectsize mean1 mean2 std1 std2] = cohenD(X,Y,type)
 % Effect size caculator: Cohen's d
 % X, Y should be a colume of vectors;
 % Type 1: indepdent sample t test; type 2: matched sample t test
 % by LJG & WRS. 2010.7
 % modifed by LJG @ 2011.4
 
-function [effectsize mean1 mean2 std1 std2] = cohen_d(X,Y,type)
+function [effectsize mean1 mean2 std1 std2] = cohenD(X,Y,type)
     
     mean1 = mean(X);
     mean2 = mean(Y);

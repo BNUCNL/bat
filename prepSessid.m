@@ -1,4 +1,4 @@
-function  newidlist = prepsessid(idfile,opstr,idlist)
+function  newidlist = prepSessid(idfile,opstr,idlist)
  % newidlist = prepsessid(idfile,opstr,idlist)
  % prepare sessid file for the study
  % idfile: text file which store the ID, every row is one ID

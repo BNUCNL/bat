@@ -1,4 +1,4 @@
-function  targmat = loaddata(mergematfile,idfile)
+function  targmat = loadData(mergematfile,idfile)
 % Load targmat according to the idfile
 
 global STUDY
