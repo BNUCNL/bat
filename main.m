@@ -1,70 +1,71 @@
 clear
-pardir = 'D:\CFE';
+
+% BAT code dir
+codedir = 'D:\BAT';
+addpath(codedir);
+
+% parent dir for BAT study
+pardir = 'D:\BAT';
+
+% study dir for BAT study
 studydir =fullfile(pardir,'study');
-codedir = 'D:\behavior';
-rawdatadir = fullfile(pardir,'std_CFE');
-datadir = fullfile(studydir,'data');
-cd(codedir);
 
-global STUDY;
+% dir for raw data
+rawdatadir = fullfile(pardir,'organized_tom_data');
 
-condname = {'alignsame','aligndiff','misalignsame','misaligndiff'};
-Ncond = length(condname);
-
-STUDY.cond = condname;
-
-
-% prepare sessid
-idfile = fullfile(datadir,'sessid.txt');
-% idlist = {'S0250','S0332','S0029'};
-% newidlist = prepsessid(idfile,'add',idlist);
-
-% merge data from all subjects
-outfile = fullfile(studydir,'data','std_CFE');
-% mergedata(rawdatadir,outfile);
+if ~exist(fullfile(studydir, 'normSubjData'),'file')
+    % Merge subjdata into one structure
+    % and save it to studydir
+    subj = mergeSubjData(rawdatadir);
+    save(fullfile(studydir, 'normSubjData'),'subj');
+else
+    
+    % Label subjdata with MRI ID
+    % load the data of interest of subjects
+    % based on the idfile
+    % rawmat = loadData([outfile,'.mat'],idfile);
+    subj = load(fullfile(studydir, 'normSubjData.mat'));
+end
 
 
 
-% load the data of interest of subjects 
-% based on the idfile
-rawmat = loadData([outfile,'.mat'],idfile);
-
-Nsubj = length(rawmat);
-
-% plotSubjRT()
-
-
-% disp the extremeval of rawmat
-extremeval = extremeRT('all');
+% construct STUDY object
+cond = {'False Belief','Physical Reality'};
+study = Study(studydir,'TOM LOC',cond,subj);
 
 
 
+close all
 
-% estimate the acc and RT for rawmat
-rawRT  = estimateRT();
-rawacc = estimateAccuracy();
+% % compute accurcy
+% acc = study.accuracy();
 
-
-% delete trial acording the cutoff
-[newmat,stats] = delTrial(rawmat,[0.2,6]);
-
-
-% disp the extremeval disp after remove ouliter
-extremeval = extremeRT(newmat,'all');
+% compute RT
+% rt  = study.RT();
 
 
-
-% estimate the acc and RT for newmat
-newRT = estimateRT();
-newacc = estimateAccuracy();
+% disp the extremeval of subj data
+% extremeval = study.extremeRT('cond');
 
 
+% study.plotSubjRT()
 
-%%  reliability 
-repetition = 10;
-[first_half,second_half] = splitHalfTrial(repetition);
-[mean_corr,std_corr] = splitHalfReliability('Pearson');
+%
+% % delete trial acording the cutoff
+% [study,stats] = study.delTrial([1,6]);
 
-[mean_corr,std_corr] = splitHalfReliability('Pearson',[1 0 -1 0]);
+
+%
+% % disp the extremeval disp after remove ouliter
+% extremeval = study.extremeRT('all');
+
+
+
+
+% %%  reliability
+nrep = 10;
+[rmean,rstd] = study.splitHalfReliability('rt','Pearson',nrep);
+squeeze(rmean);
+
 
 

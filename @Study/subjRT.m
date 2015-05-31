@@ -1,4 +1,4 @@
-function  plotSubjRT()
+function  plotSubjRT(obj)
 % data:
 
 global STUDY

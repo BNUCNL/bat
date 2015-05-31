@@ -1,20 +1,25 @@
-function extremeval = extremeRT(mode)
-% rawdata:
+function extremeval = extremeRT(obj,mode)
+% subj:
 % mode: 'all','cond'
 
-global STUDY
-rawdata = STUDY.raw;
-Nsubj = length(rawdata);
+subj = obj.subj;
+Nsubj = length(subj);
 
 switch mode
     case 'all'
         % max and min value to detect outlier
         extremeval = zeros(Nsubj,2);
         for s = 1:Nsubj
-            trial = rawdata(s).trial;
-            label = trial(:,4)==1;
-            extremeval(s,1)  = max(trial(label,3));
-            extremeval(s,2)  = min(trial(label,3));
+            
+            label = subj(s).trial(:,3); % true answer
+            resp  = subj(s).trial(:,4); % subj response
+            rt   = subj(s).trial(:,5); % subject rt
+            
+            idx = label == resp;
+            if any(idx)
+                extremeval(s,1)  = max(rt(idx));
+                extremeval(s,2)  = min(rt(idx));
+            end
         end
         
         
@@ -28,17 +33,23 @@ switch mode
         subplot(1,4,4),hist(minval);title('Min RT');
         
     case 'cond'
-        cond = unique(rawdata(1).trial(:,1));
-        Nc = length(cond);
+        conds = unique(subj(1).trial(:,2));
+        Nc = length(conds);
         extremeval = zeros(Nc,Nsubj,2);
         
-        for s = 1:length(rawdata)
-            trial = rawdata(s).trial;
-            for c = cond'
-                cidx = trial(:,1) == c;
-                ctrial = trial(cidx,:);
-                extremeval(c,s,1) = max(ctrial(:,3));
-                extremeval(c,s,2) = min(ctrial(:,3));
+        for s = 1:length(subj)      
+            cond  = subj(s).trial(:,2); % cond label
+            label = subj(s).trial(:,3); % true answer
+            resp  = subj(s).trial(:,4); % subj response
+            rt   = subj(s).trial(:,5); % subject rt
+            
+      
+            for c = 1:Nc
+                idx   = cond == conds(c) & resp == label;
+                if any(idx)
+                    extremeval(c,s,1) = max(rt(idx));
+                    extremeval(c,s,2) = min(rt(idx));
+                end
             end
         end
         
@@ -60,7 +71,7 @@ switch mode
 end
 
 
-STUDY.extremeval = extremeval;
+% obj.extremeval = extremeval;
 
 
 

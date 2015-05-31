@@ -1,9 +1,17 @@
 function  newidlist = prepSessid(idfile,opstr,idlist)
- % newidlist = prepsessid(idfile,opstr,idlist)
+ % newidlist = prepSessid(idfile,opstr,idlist)
  % prepare sessid file for the study
  % idfile: text file which store the ID, every row is one ID
  % opstr: operation string: 'make','add','del'
  % idlist: IDs to be preprocessed(a Nx1 string cell array)
+
+ 
+ 
+% % prepare sessid
+% idfile = fullfile(datadir,'sessid.txt');
+% % idlist = {'S0250','S0332','S0029'};
+% % newidlist = prepsessid(idfile,'add',idlist);
+
 
 
 switch lower(opstr)
