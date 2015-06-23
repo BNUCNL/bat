@@ -1,11 +1,15 @@
 function mergeSubjRun(rawdatadir,mergeddir)
-% Normalize individual subject data and then merge them
-% rawdir: dir for raw data
+% mergeSubjRun(rawdatadir,mergeddir)
+% Merge all runs from a subject to the first run;
+% the data structure remain the same, just as more trials 
+% are conducted in the first run. 
+% rawdatadir: dir for raw data which is separated for each run.
+% mergeddir: dir to save the merged mat file
 
 filelist = dir(fullfile(rawdatadir,'*.mat'));
 
-nR = 2; % number of run
-idx = reshape(1:length(filelist),nR,[])';
+nR = 2; % number of run for each subject
+idx = reshape(1:length(filelist),nR,[])'; % index for each subject 
 nS = size(idx,1);% number of subject
 
 

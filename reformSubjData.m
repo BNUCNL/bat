@@ -1,5 +1,7 @@
 function  subj = reformSubjData(datadir)
-% reform individual subject data
+% subj = reformSubjData(datadir)
+% reformat individual subject data from the megered file;
+% for this, data structure is changed.
 % subj: a structure keeping the data for a subject
 % trial(:,1), stimulus ID
 % trial(:,2), cond label
@@ -7,8 +9,6 @@ function  subj = reformSubjData(datadir)
 % trial(:,4), subject answer
 % trial(:,5), react time
 % trial(:,6), run number
-
-% datadir = mergeddir
 
 filelist = dir(fullfile(datadir,'*.mat'));
 nS = length(filelist);
