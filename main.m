@@ -1,5 +1,4 @@
 clear
-
 % BAT code dir
 codedir = 'D:\BAT';
 addpath(codedir);
@@ -10,21 +9,23 @@ pardir = 'D:\BAT';
 % study dir for BAT study
 studydir =fullfile(pardir,'study');
 
-% dir for raw data
-rawdatadir = fullfile(pardir,'organized_tom_data');
 
-if ~exist(fullfile(studydir, 'normSubjData'),'file')
+
+if ~exist(fullfile(studydir, 'reformSubjData'),'file')
     % Merge subjdata into one structure
     % and save it to studydir
-    subj = mergeSubjData(rawdatadir);
-    save(fullfile(studydir, 'normSubjData'),'subj');
-else
+    rawdatadir = fullfile(pardir,'organized_tom_data');
+    mergeddir =  fullfile(pardir,'merged_tom_data');
+    mergeSubjRun(rawdatadir,mergeddir);
     
+    subj = reformSubjData(mergeddir);
+    save(fullfile(studydir, 'reformSubjData'),'subj');
+else
     % Label subjdata with MRI ID
     % load the data of interest of subjects
     % based on the idfile
     % rawmat = loadData([outfile,'.mat'],idfile);
-    subj = load(fullfile(studydir, 'normSubjData.mat'));
+    subj = load(fullfile(studydir, 'reformSubjData.mat'));
 end
 
 
@@ -38,14 +39,14 @@ study = Study(studydir,'TOM LOC',cond,subj);
 close all
 
 % % compute accurcy
-% acc = study.accuracy();
+% study = study.accuracy(true);
 
 % compute RT
-% rt  = study.RT();
+% study  = study.RT();
 
 
 % disp the extremeval of subj data
-% extremeval = study.extremeRT('cond');
+% study = study.extremeRT('cond');
 
 
 % study.plotSubjRT()

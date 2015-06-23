@@ -1,12 +1,14 @@
-function extremeval = extremeRT(obj,mode)
-% subj:
-% mode: 'all','cond'
+function obj = extremeRT(obj,mode,plotFigure)
+% mode: 'all': ,'cond'
+
+if nargin < 3, plotFigure = false; end
+
 
 subj = obj.subj;
 Nsubj = length(subj);
 
 switch mode
-    case 'all'
+    case 'all' % merged different condtion together
         % max and min value to detect outlier
         extremeval = zeros(Nsubj,2);
         for s = 1:Nsubj
@@ -32,18 +34,18 @@ switch mode
         subplot(1,4,3),bar(minval);title('Min RT');
         subplot(1,4,4),hist(minval);title('Min RT');
         
-    case 'cond'
+    case 'cond' % each conditon, separately
         conds = unique(subj(1).trial(:,2));
         Nc = length(conds);
         extremeval = zeros(Nc,Nsubj,2);
         
-        for s = 1:length(subj)      
+        for s = 1:length(subj)
             cond  = subj(s).trial(:,2); % cond label
             label = subj(s).trial(:,3); % true answer
             resp  = subj(s).trial(:,4); % subj response
             rt   = subj(s).trial(:,5); % subject rt
             
-      
+            
             for c = 1:Nc
                 idx   = cond == conds(c) & resp == label;
                 if any(idx)
@@ -55,23 +57,25 @@ switch mode
         
         
         
-        % detemine the cutoff for RT by visualization
-        figure
-        for c = 1:Nc
-            maxval = extremeval(c,:,1);
-            minval = extremeval(c,:,2);
-            
-            subplot(Nc,4,4*(c-1)+1),bar(maxval);title('Max RT');
-            subplot(Nc,4,4*(c-1)+2),hist(maxval,1000);title('Max RT');
-            subplot(Nc,4,4*(c-1)+3),bar(minval);title('Min RT');
-            subplot(Nc,4,4*(c-1)+4),hist(minval,1000);title('Min RT');
+        if plotFigure
+            % detemine the cutoff for RT by visualization
+            figure
+            for c = 1:Nc
+                maxval = extremeval(c,:,1);
+                minval = extremeval(c,:,2);
+                
+                subplot(Nc,4,4*(c-1)+1),bar(maxval);title('Max RT');
+                subplot(Nc,4,4*(c-1)+2),hist(maxval,1000);title('Max RT');
+                subplot(Nc,4,4*(c-1)+3),bar(minval);title('Min RT');
+                subplot(Nc,4,4*(c-1)+4),hist(minval,1000);title('Min RT');
+            end
         end
     otherwise
         disp('Unknown Mode')
 end
 
 
-% obj.extremeval = extremeval;
+obj.extremeval = extremeval;
 
 
 

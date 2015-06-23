@@ -1,10 +1,9 @@
 function  plotSubjRT(obj)
-% data:
+% plotSubjRT(obj)
+% polt RT for each subject
 
 
 subj = obj.subj;
-
-
 Nsubj = length(subj);
 conds = unique(subj(1).trial(:,2));
 Nc = length(conds);
