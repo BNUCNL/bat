@@ -10,43 +10,47 @@ pardir = 'D:\BAT';
 studydir =fullfile(pardir,'study');
 
 
-
-if ~exist(fullfile(studydir, 'reformSubjData'),'file')
+if ~exist(fullfile(studydir, 'SubjData.mat'),'file')
     % Merge subjdata into one structure
     % and save it to studydir
-    rawdatadir = fullfile(pardir,'organized_tom_data');
-    mergeddir =  fullfile(pardir,'merged_tom_data');
-    mergeSubjRun(rawdatadir,mergeddir);
     
-    subj = reformSubjData(mergeddir);
-    save(fullfile(studydir, 'reformSubjData'),'subj');
+    rawdatadir = fullfile(pardir,'organized_num_data');
+    mergeddir =  fullfile(pardir,'merged_num_data');
+    if ~exist(mergeddir, 'dir')
+        mkdir(mergeddir)
+    end
+    
+    mergeRun(rawdatadir,mergeddir);
+    
+    subj = mergeSubj(mergeddir);
+    save(fullfile(studydir, 'SubjData.mat'),'subj');
 else
     % Label subjdata with MRI ID
     % load the data of interest of subjects
     % based on the idfile
     % rawmat = loadData([outfile,'.mat'],idfile);
-    subj = load(fullfile(studydir, 'reformSubjData.mat'));
+    load(fullfile(studydir, 'SubjData.mat'));
 end
 
 
 
 % construct STUDY object
-cond = {'False Belief','Physical Reality'};
-study = Study(studydir,'TOM LOC',cond,subj);
+cond = {'Numerosity','Brightness'};
+study = Study(studydir,'NUM LOC',cond,subj);
 
 
 
 close all
 
-% % compute accurcy
-% study = study.accuracy(true);
+% compute accurcy
+study = study.accuracy(true);
 
 % compute RT
-% study  = study.RT();
+ study  = study.RT(true);
 
 
 % disp the extremeval of subj data
-% study = study.extremeRT('cond');
+study = study.extremeRT('cond',true);
 
 
 % study.plotSubjRT()
