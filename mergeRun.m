@@ -1,6 +1,6 @@
 function mergeRun(rawdatadir,mergeddir)
 % mergeRun(rawdatadir,mergeddir)
-% It has two function:  I)reform data structure, and assemble stimule, condtion and response 
+% It has two function:  I)reform data structure, and assemble stimule, condtion and response
 % information into a array, called trial. II) merge data from multiple runs into one file, and save it
 % NOTE: in using the code, the user just need to modify this function to
 % generate the standrized data structure.
@@ -16,12 +16,12 @@ function mergeRun(rawdatadir,mergeddir)
 
 filelist = dir(fullfile(rawdatadir,'*.mat'));
 
-nR = 2; % number of run
-idx = reshape(1:length(filelist),nR,[])';
-nS = size(idx,1);% number of subject
+nRun = 2; % number of run
+idx = reshape(1:length(filelist),nRun,[])';
+nSubj = size(idx,1);% number of subject
 
 % task,
-taskName = 'NUM_Loc';
+taskName = 'NUM_LOC';
 
 % condtion
 design1 = [ones(1,10), 2*ones(1,10),2*ones(1,10),ones(1,10),ones(1,10),2*ones(1,10)]';
@@ -32,18 +32,16 @@ stimID = zeros(60,1);
 
 
 
-for i = 1:nS
+for i = 1:nSubj
     stim = [];
     cond = [];
     trueAnswer =[];
     subjAnswer = [];
-    RT = [];
+    rt = [];
     run  = [];
-    
-    trial = [];
-    
+        
     % merge runs and reformat data structure
-    for j = 1:nR
+    for j = 1:nRun
         D  = load(fullfile(rawdatadir,filelist(idx(i,j)).name));
         
         % stimulus ID
@@ -63,21 +61,17 @@ for i = 1:nS
         % subj's answer
         subjAnswer = [subjAnswer;cell2mat(D.Response_all)];
         
-        % subj's RT
-        RT = [RT;cell2mat(D.RT_all)];
+        % subj's rt
+        rt = [rt;cell2mat(D.RT_all)];
         
         % run ID
         run = [run;j*ones(length(stimID),1)];
-        
-        
-        % assemble all information in trial
-        trial = [trial;[stim,cond,trueAnswer,subjAnswer,RT,run]];
-    end
-    
+    end  
     
     subj.name = D.subj;
-    subj.taskName = taskName;
-    subj.trial = trial;
+    subj.taskName = taskName;       
+    % assemble all information in trial
+    subj.trial = [stim,cond,trueAnswer,subjAnswer,rt,run];
     
     % the merged data will be save into the mergeddir using the same name
     % as the file from the fist run
