@@ -8,6 +8,7 @@ classdef Study
         subj
         acc
         rt
+        extremeval
     end
     
     

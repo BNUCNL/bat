@@ -5,38 +5,37 @@ if nargin < 2, plotFigure = false; end
 subj = obj.subj;
 Nsubj = length(subj); % number of subjects
 conds = unique(subj(1).trial(:,2));
-Ncond = length(conds);% number of conditions
+nCond = length(conds);% number of conditions
 
 
-acc = NaN(Nsubj,Ncond);
+acc = NaN(Nsubj,nCond);
 for s = 1:Nsubj
     cond = subj(s).trial(:,2); % cond num
     label = subj(s).trial(:,3);% true answer
     resp = subj(s).trial(:,4); % subj response
     
     % calculate acc for each condition
-    for c = 1:Ncond
+    for c = 1:nCond
         idx   = cond == conds(c) & resp == label;
         acc(s,c) = sum(idx)/sum(cond == c);
     end
-     
+    
     % calculate acc for all of conditions
-    acc(s,Ncond+1) = sum(resp == label)/length(resp);
+    acc(s,nCond+1) = sum(resp == label)/length(resp);
 end
 
 obj.acc = acc;
 
 
 % plot the results
-if plotFigure 
+if plotFigure
     leg = obj.cond;
-    leg{end+1} = 'Overall';
     
     barvalues = mean(acc)';
     errors = std(acc)';
     width = .85;
     groupnames =[];
-    bw_title = 'Accuracy Summary';
+    bw_title = 'ACC Summary';
     bw_xlabel = [];
     bw_ylabel = 'Accuracy';
     bw_colormap = [];
@@ -47,9 +46,18 @@ if plotFigure
         bw_xlabel, bw_ylabel, bw_colormap, gridstatus, bw_legend);
     
     
+    
+    
     figure('Name','Histgram for ACC');
-    subplot(121),hist(acc(:,1)),title(sprintf('%s', obj.cond{1}));
-    subplot(122),hist(acc(:,2)),title(sprintf('%s', obj.cond{2}));
-    set(gca, 'YMinorTick', 'on')
+    nCond = nCond + 1;
+    
+    for c = 1:nCond
+        subplot(1,nCond,c);
+        hist(acc(:,c)),title(sprintf('%s', obj.cond{c}));
+        ylabel('Freq');xlabel('RT')
+        set(gca, 'YMinorTick', 'on');
+        axis square
+    end
+    
 end
 
