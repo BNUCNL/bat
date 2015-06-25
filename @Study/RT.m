@@ -55,7 +55,7 @@ if plotFigure
         hist(rt(:,c)),title(sprintf('%s', obj.cond{c}));
         ylabel('Freq');xlabel('RT')
         set(gca, 'YMinorTick', 'on');
-        axis square
+%         axis square
         
     end
 end
