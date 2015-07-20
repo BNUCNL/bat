@@ -1,3 +1,5 @@
+%% The main script to process data with BAT
+
 clear
 close all
 
@@ -10,28 +12,10 @@ pardir = 'D:\BAT';
 
 % study dir for BAT study
 studydir =fullfile(pardir,'study');
-if ~exist(studydir, 'dir')
-    mkdir(studydir)
-end
-
-if ~exist(fullfile(studydir, 'SubjData.mat'),'file')
-    rawdatadir = fullfile(pardir,'organized_num_data');
-    mergeddir =  fullfile(pardir,'merged_num_data');
-    if ~exist(mergeddir, 'dir')
-        mkdir(mergeddir)
-    end
-    
-    % merge multiple runs from a single subjectd and save it to mergedir
-    mergeRun(rawdatadir,mergeddir);
-    
-    % merge all subject data into a structure array(i.e., subj)
-    subj = mergeSubj(mergeddir);
-    % save merged data
-    save(fullfile(studydir, 'SubjData.mat'),'subj');
-else
+if exist(fullfile(studydir, 'SubjData.mat'),'file')
     load(fullfile(studydir, 'SubjData.mat'));
-    % delete bad subjects at this point
-    subj(78) = [];
+else
+    error('SubjData is not existed.');
 end
 
 % construct STUDY object
