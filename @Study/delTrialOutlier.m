@@ -17,13 +17,15 @@ stats = zeros(Nsubj,nCond);
 % del bad trials for each subject
 for s  = 1:Nsubj
     cond =  subj(s).trial(:,2);
-    label = subj(s).trial(:,3); % true answer
-    resp  = subj(s).trial(:,4); % subj response
+%     label = subj(s).trial(:,3); % true answer
+%     resp  = subj(s).trial(:,4); % subj response
     rt   = subj(s).trial(:,5);  % subject rt
     badidx = false(length(cond),nCond);
     
     for c = 1:nCond
-        idx = resp == label & cond == condID(c);
+%         idx = resp == label & cond == condID(c); % only care correct
+%         trials
+        idx = cond == condID(c); % care both correct and uncorrect trials
         crt = rt(idx);% rt for a conditon
         if strcmp(meth,'IQR')
             Q = prctile(crt, [25; 75]);
