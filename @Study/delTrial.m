@@ -1,10 +1,10 @@
-function stats = delTrialOutlier(obj,meth,range,plotFigure)
-% [obj,stats] = delTrialOutlier(obj,meth,range,plotFigure)
+function stats = delTrial(obj,meth,range,plotFigure)
+% stats = delTrial(obj,meth,range,plotFigure)
 % method: ABS, IQR,or STD
-% if meth is IQR for STD, range is a multiple factor to define the limit,
-% e.g, [mean-range*STD, mean+ range*STD];if method is ABS: range is vector,[low,high]
+% if meth is IQR for STD, range is a multiple factor to be used to define
+% the limit;e.g, [mean-range*STD, mean+ range*STD]
+% if method is ABS: range is vector,[low,high]
 % stats: number of bad trials for each subject
-% plotFigure, true or false
 
 if nargin < 4, plotFigure = false; end
 
@@ -13,7 +13,6 @@ Nsubj = length(subj);
 condID = unique(subj(1).trial(:,2));
 nCond = length(condID);
 stats = zeros(Nsubj,nCond);
-
 
 % del bad trials for each subject
 for s  = 1:Nsubj
@@ -29,7 +28,7 @@ for s  = 1:Nsubj
         if strcmp(meth,'IQR')
             Q = prctile(crt, [25; 75]);
             IQR = Q(2) - Q(1);
-            lowcut =  Q(1) - range*IQR;
+            lowcut =  Q(1) - range* IQR;
             highcut = Q(2) + range*IQR;
        
         elseif strcmp(meth,'STD')
@@ -44,6 +43,7 @@ for s  = 1:Nsubj
         end
        
         idx = idx & (rt < lowcut | rt > highcut);
+        
         stats(s,c) = sum(idx);
         badidx(:,c) = idx;
     end

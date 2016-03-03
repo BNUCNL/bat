@@ -1,5 +1,8 @@
-function obj = extremeRT(obj,mode,plotFigure)
+function extremeval = extremeRT(obj,mode,plotFigure)
+%  extremeval = extremeRT(obj,mode,plotFigure)
 % mode: 'all': ,'cond'
+% plotFigure: true or false
+% extremeval: extrame value matrx 
 
 if nargin < 3, plotFigure = false; end
 

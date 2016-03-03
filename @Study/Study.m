@@ -9,6 +9,8 @@ classdef Study
         acc
         rt
         extremeval
+        ces
+        dp
     end
     
     
