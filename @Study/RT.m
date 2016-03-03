@@ -1,5 +1,7 @@
-function obj = RT(obj,plotFigure)
-% RT: react time for each condtion and subject
+function rt = RT(obj,plotFigure)
+%  rt = RT(obj,plotFigure)
+% rt: react time for each condtion and subject
+% plotFigure, true or false
 
 
 if nargin < 2, plotFigure = false; end

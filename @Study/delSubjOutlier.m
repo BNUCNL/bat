@@ -1,11 +1,12 @@
-function obj = delSubjOutlier(obj,meth,range,param,plotFigure)
-% [obj,badSubj] = delSubjOutlier(obj,meth,range,param,plotFigure)
+function [badSubj,idx] = delSubjOutlier(obj,meth,range,param,plotFigure)
+% badSubj = delSubjOutlier(obj,meth,range,param,plotFigure)
 % The method detect outlier subject based on ACC or RT
 % param: ACC or RT
 % meth: ABS, IQR,or STD
 % range: if meth is IQR for STD, range is a multiple factor to define
 % the limit;e.g, [mean-range*STD, mean+ range*STD]. if method is ABS,range is vector,[low,high]
-% badSuhj: index matrix for bad subject
+% badSuhj: subj array for bad subjects
+% idx: index for bad subjects
 
 if nargin < 5, plotFigure = false; end
 if nargin < 4, param = 'ACC';end
@@ -53,6 +54,7 @@ end
 
 % delete subject
 badSubjIdx = any(badSubj,2);
+badSubj = obj.subj(badSubjIdx);
 obj.subj(badSubjIdx) = [];
 fprintf(1,'In total,%d Subjects have been discard\n', sum(badSubjIdx));
 
