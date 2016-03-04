@@ -1,4 +1,4 @@
-function dp = dprime(obj, plotFigure)
+function [obj,dp] = dprime(obj, plotFigure)
 % obj = dprime(obj, plotFigure)
 % plotFigure, true or false to indicate if the figure will be ploted
 % note that dprime only work for a two-alternative forced choice task

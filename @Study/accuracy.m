@@ -1,5 +1,5 @@
-function acc = accuracy(obj, plotFigure)
-% acc = accuracy(obj, plotFigure)
+function [obj,rt] = accuracy(obj, plotFigure)
+% obj = accuracy(obj, plotFigure)
 % plotFigure: true or false
 % acc: accurcy matrix(nSubj x nCond)
 
