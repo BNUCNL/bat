@@ -1,4 +1,4 @@
-function extremeval = extremeRT(obj,mode,plotFigure)
+function [obj,extremeval] = extremeRT(obj,mode,plotFigure)
 %  extremeval = extremeRT(obj,mode,plotFigure)
 % mode: 'all': ,'cond'
 % plotFigure: true or false

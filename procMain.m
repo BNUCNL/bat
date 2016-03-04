@@ -51,6 +51,16 @@ nrep = 1000;
 contrast = [1 -1 0];
 [rAcc,rRT] = study.splitHalfReliability(contrast,'Pearson',nrep);
 
+
+%% calculate the contrast of effect size
+contrast = [1 -1 0];
+study = study.contrastEffect(contrast,'rt','regression',true);
+
+
+%% calculate d prime
+study = study.dprime(false);
+
+
 % find MRI ID for each subject
 subjIDfile = 'D:\BAA\SUBJDEMO\allSubjID.xlsx';
 study = study.matchID(subjIDfile);

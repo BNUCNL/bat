@@ -1,4 +1,4 @@
-function [badSubj,idx] = delSubjOutlier(obj,meth,range,param,plotFigure)
+function [obj,badSubj,idx] = delSubjOutlier(obj,meth,range,param,plotFigure)
 % badSubj = delSubjOutlier(obj,meth,range,param,plotFigure)
 % The method detect outlier subject based on ACC or RT
 % param: ACC or RT

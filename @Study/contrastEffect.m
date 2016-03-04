@@ -1,5 +1,5 @@
-function ces = contrastEffect(obj,contrast,meastype, meth,plotFigure)
-% ces = calEffect(obj,contrast,meas, type)
+function [obj,ces] = contrastEffect(obj,contrast,meastype, meth,plotFigure)
+% obj = calEffect(obj,contrast,meas, type)
 % calculate the effect for a set of constrast
 % contrast: contrast of interest, N(num of constrat)xM(num of condition);
 % meastype: acc or rt
@@ -79,6 +79,7 @@ if plotFigure
     gridstatus = [];
     bw_legend = leg;
     
+    figure('Name','CES Summary');
     handles = barweb(barvalues, errors, width, groupnames, bw_title,...
         bw_xlabel, bw_ylabel, bw_colormap, gridstatus, bw_legend);
     
