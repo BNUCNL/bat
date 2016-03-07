@@ -1,4 +1,7 @@
-function obj = accuracy(obj, plotFigure)
+function [obj,rt] = accuracy(obj, plotFigure)
+% obj = accuracy(obj, plotFigure)
+% plotFigure: true or false
+% acc: accurcy matrix(nSubj x nCond)
 
 if nargin < 2, plotFigure = false; end
 
@@ -6,7 +9,6 @@ subj = obj.subj;
 Nsubj = length(subj); % number of subjects
 conds = unique(subj(1).trial(:,2));
 nCond = length(conds);% number of conditions
-
 
 acc = NaN(Nsubj,nCond);
 for s = 1:Nsubj
@@ -25,8 +27,6 @@ for s = 1:Nsubj
 end
 
 obj.acc = acc;
-
-
 % plot the results
 if plotFigure
     leg = obj.cond;
@@ -41,23 +41,17 @@ if plotFigure
     bw_colormap = [];
     gridstatus = [];
     bw_legend = leg;
-    
-    handles = barweb(barvalues, errors, width, groupnames, bw_title,...
+    barweb(barvalues, errors, width, groupnames, bw_title,...
         bw_xlabel, bw_ylabel, bw_colormap, gridstatus, bw_legend);
-    
-    
-    
     
     figure('Name','Histgram for ACC');
     nCond = nCond + 1;
-    
     for c = 1:nCond
         subplot(1,nCond,c);
         hist(acc(:,c)),title(sprintf('%s', obj.cond{c}));
         ylabel('Freq');xlabel('RT')
         set(gca, 'YMinorTick', 'on');
-%         axis square
+        %         axis square
     end
-    
 end
 
