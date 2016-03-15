@@ -49,7 +49,7 @@ if plotFigure
     for c = 1:nCond
         subplot(1,nCond,c);
         hist(acc(:,c)),title(sprintf('%s', obj.cond{c}));
-        ylabel('Freq');xlabel('RT')
+        ylabel('Freq');xlabel('ACC')
         set(gca, 'YMinorTick', 'on');
         %         axis square
     end
